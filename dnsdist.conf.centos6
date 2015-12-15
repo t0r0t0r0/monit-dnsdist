@@ -1,0 +1,4 @@
+check process dnsdist with pidfile /var/run/dnsdist.pid
+       start program = "/etc/init.d/dnsdist start"
+       stop program  = "/etc/init.d/dnsdist stop"
+       if failed host 153.126.167.156 port 53 use type udp protocol dns then restart
