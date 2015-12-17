@@ -1,4 +1,8 @@
 check process dnsdist with pidfile /var/run/dnsdist.pid
        start program = "/etc/init.d/dnsdist start"
        stop program  = "/etc/init.d/dnsdist stop"
-       if failed host 153.126.167.156 port 53 use type udp protocol dns then restart
+       if failed host 127.0.0.1 port 53 use type udp protocol dns then restart
+
+check program checknamed with path "/usr/lib64/nagios/plugins/check_dig -l ns1.google.com -H 127.0.0.1 -p 53 -4"
+        if status != 0 then alert
+        if status != 0 for 3 cycles then exec "/etc/init.d/dnsdist restart"
